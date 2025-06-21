@@ -1,15 +1,16 @@
-document.getElementById('bloomBtn').addEventListener('click', function () {
-  const bouquet = document.getElementById('bouquet');
-  const audio = document.getElementById('bgMusic');
+const cover     = document.getElementById('cover');
+const wrapper   = document.getElementById('videoWrapper');
+const video     = document.getElementById('bouquetVideo');
+const giftBtn   = document.getElementById('giftBtn');
 
-  bouquet.classList.remove('hidden');
-  bouquet.classList.add('show');
-
-  // Play music (gentle, autoplay-friendly)
-  if (audio.paused) {
-    audio.volume = 0.4;
-    audio.play().catch(() => {
-      console.log("Autoplay blocked — user interaction needed.");
-    });
-  }
+giftBtn.addEventListener('click', () => {
+  // hide cover, reveal video
+  cover.classList.add('hidden');
+  wrapper.classList.remove('hidden');
+  // trigger fade-in 
+  requestAnimationFrame(() => wrapper.classList.add('show'));
+  // autoplay
+  video.play().catch(() => {
+    /* if browser blocks autoplay, user can click play */
+  });
 });
