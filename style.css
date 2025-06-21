@@ -7,6 +7,7 @@ body {
   justify-content: center;
   align-items: center;
   height: 100vh;
+  overflow: hidden;
 }
 
 .container {
@@ -49,4 +50,19 @@ button:hover {
 
 .hidden {
   display: none;
+}
+
+/* Leaf Animation */
+.leaf {
+  animation: sway 3s ease-in-out infinite alternate;
+  transform-origin: center;
+}
+
+@keyframes sway {
+  0% {
+    transform: rotate(0deg);
+  }
+  100% {
+    transform: rotate(8deg);
+  }
 }
