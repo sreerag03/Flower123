@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Bloom Bouquet</title>
+  <link rel="stylesheet" href="style.css" />
+</head>
+<body>
+  <div class="container">
+    <h1>Click to Bloom!</h1>
+    <button id="bloomBtn">Give me a Bouquet 🌷</button>
+    <div class="bouquet-container hidden" id="bouquet">
+      <!-- SVG Flower Bouquet -->
+      <svg width="300" height="400" viewBox="0 0 300 400">
+        <defs>
+          <radialGradient id="petalGrad" cx="50%" cy="50%" r="50%">
+            <stop offset="0%" stop-color="#ffb7c5"/>
+            <stop offset="100%" stop-color="#ff69b4"/>
+          </radialGradient>
+        </defs>
+        <!-- Stems -->
+        <line x1="150" y1="300" x2="100" y2="380" stroke="#4CAF50" stroke-width="5"/>
+        <line x1="150" y1="300" x2="200" y2="380" stroke="#4CAF50" stroke-width="5"/>
+        <line x1="150" y1="300" x2="150" y2="380" stroke="#4CAF50" stroke-width="5"/>
+
+        <!-- Flower 1 -->
+        <circle cx="100" cy="200" r="25" fill="url(#petalGrad)" />
+        <circle cx="100" cy="200" r="10" fill="yellow" />
+
+        <!-- Flower 2 -->
+        <circle cx="200" cy="200" r="25" fill="url(#petalGrad)" />
+        <circle cx="200" cy="200" r="10" fill="yellow" />
+
+        <!-- Flower 3 -->
+        <circle cx="150" cy="150" r="30" fill="url(#petalGrad)" />
+        <circle cx="150" cy="150" r="10" fill="yellow" />
+      </svg>
+    </div>
+  </div>
+  <script src="script.js"></script>
+</body>
+</html>
