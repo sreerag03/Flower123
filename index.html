@@ -23,6 +23,8 @@
     animation: bgflow 30s ease infinite;
   }
   @keyframes bgflow{0%{background-position:0% 50%;}50%{background-position:100% 50%;}100%{background-position:0% 50%;}}
+
+  .hidden {display: none;}
   .cover, .video-container, .end-message {
     position:absolute; top:50%; left:50%; transform: translate(-50%,-50%); text-align:center;
   }
@@ -30,14 +32,14 @@
     font-family:'Playfair Display',serif; font-size:3rem; color: var(--primary); margin-bottom:0.5rem;
   }
   .cover p {font-size:1rem;color:var(--text); margin-bottom:1rem;opacity:0.85;}
-  #giftBtn, #togglePetals, #replayBtn, #closeMsg {
+  #giftBtn, #replayBtn, #closeMsg {
     background: var(--primary); color:#fff; border:none; padding:0.8rem 1.8rem; font-size:1rem;
     border-radius:50px; cursor:pointer; transition: transform 0.3s ease, box-shadow 0.3s;
     box-shadow: 0 4px 10px rgba(0,0,0,0.1); margin:0.5rem;
   }
-  #togglePetals {background: #fff; color: var(--primary); border:2px solid var(--primary);}
-  #togglePetals.active {background: var(--primary); color:#fff;}
+  #replayBtn {background: #fff; color: var(--primary); border:2px solid var(--primary);}
   #giftBtn:hover, #replayBtn:hover {transform: scale(1.05); box-shadow:0 6px 15px rgba(0,0,0,0.15);}
+
   .video-container.hidden, .end-message.hidden {display:none;}
   .video-container {
     opacity:0; transform: translate(-50%,-50%) scale(0.9);
@@ -45,7 +47,7 @@
   }
   .video-container.show {display:block; opacity:1; transform: translate(-50%,-50%) scale(1);}
   video {max-width:90vw; max-height:80vh; border-radius:8px; box-shadow:0 6px 20px rgba(0,0,0,0.15);}
-  #replayBtn {background: #fff; color: var(--primary); border:2px solid var(--primary);}
+
   .end-message {
     width:80vw; max-width:400px; background:rgba(255,255,255,0.9); padding:2rem; border-radius:8px;
     box-shadow:0 6px 20px rgba(0,0,0,0.2); opacity:0; transform: translate(-50%,-50%) scale(0.8);
@@ -54,15 +56,18 @@
   .end-message.show {display:block; opacity:1; transform: translate(-50%,-50%) scale(1);}
   .end-message p {margin-bottom:1rem; color:var(--text); font-size:1.1rem;}
   .social-links a {margin:0 0.5rem; color: var(--primary); text-decoration:none; font-weight:600;}
+
   #loader {position:absolute; top:50%; left:50%; transform:translate(-50%,-50%);
     border:5px solid #f3f3f3; border-top:5px solid var(--primary);
     border-radius:50%; width:50px; height:50px; animation: spin 1s linear infinite; z-index:2;}
   @keyframes spin{0%{transform: translate(-50%,-50%) rotate(0deg);}100%{transform: translate(-50%,-50%) rotate(360deg);}}
+
   .petal {position:fixed; top:-20px; width:15px; height:20px;
     background: radial-gradient(circle at 30% 30%, var(--petal1), var(--petal2));
     border-radius:50%; opacity:0.9; pointer-events:none; animation: fall linear infinite;
   }
   @keyframes fall {0%{transform: translateY(-50px) rotate(0deg);}100%{transform: translateY(110vh) rotate(360deg);}}
+
   @media(prefers-color-scheme: dark) {body{background:#222;} .cover h1, .cover p{color:#ddd;}}
   </style>
 </head>
@@ -71,7 +76,6 @@
     <h1 id="greeting">Welcome</h1>
     <p>Click below to open your virtual bouquet</p>
     <button id="giftBtn">Open Bouquet</button>
-    <button id="togglePetals">Toggle Petals</button>
   </div>
   <div class="video-container hidden" id="videoContainer">
     <div id="loader"></div>
@@ -97,7 +101,6 @@
   const videoContainer = document.getElementById('videoContainer');
   const video = document.getElementById('bouquetVideo');
   const giftBtn = document.getElementById('giftBtn');
-  const togglePetalsBtn = document.getElementById('togglePetals');
   const replayBtn = document.getElementById('replayBtn');
   const loader = document.getElementById('loader');
   const endMessage = document.getElementById('endMessage');
@@ -112,30 +115,29 @@
   else greet = 'Good Evening';
   greetingEl.textContent = `${greet}, your bouquet awaits`;
 
-  // Petal toggle
-  let petalsOn = JSON.parse(localStorage.getItem('petalsOn')) ?? true;
-  togglePetalsBtn.classList.toggle('active', petalsOn);
-  togglePetalsBtn.addEventListener('click', ()=>{
-    petalsOn = !petalsOn;
-    localStorage.setItem('petalsOn', petalsOn);
-    togglePetalsBtn.classList.toggle('active', petalsOn);
-  });
-
-  // Petal effect
-  function showPetals(){ if(!petalsOn) return;
-    for(let i=0;i<25;i++){ const petal = document.createElement('div');
-      petal.className = 'petal'; petal.style.left = Math.random()*100+'vw';
-      petal.style.animationDuration = 5+Math.random()*8+'s'; petal.style.animationDelay = Math.random()*5+'s';
-      document.body.appendChild(petal); setTimeout(()=>petal.remove(), 12000);
+  // Show petals always
+  function showPetals(){ 
+    for(let i=0;i<25;i++){ 
+      const petal = document.createElement('div');
+      petal.className = 'petal'; 
+      petal.style.left = Math.random()*100+'vw';
+      petal.style.animationDuration = 5+Math.random()*8+'s'; 
+      petal.style.animationDelay = Math.random()*5+'s';
+      document.body.appendChild(petal); 
+      setTimeout(()=>petal.remove(), 12000);
     }
   }
 
   // Show video
-  function showVideo(){ cover.classList.add('hidden'); videoContainer.classList.remove('hidden');
+  function showVideo(){ 
+    cover.classList.add('hidden'); 
+    videoContainer.classList.remove('hidden');
     requestAnimationFrame(()=> videoContainer.classList.add('show'));
-    loader.style.display='block'; video.load();
+    loader.style.display='block'; 
+    video.load();
     video.addEventListener('loadeddata', ()=>{ loader.style.display='none'; video.play().catch(()=>{}); }, { once:true });
-    showPetals(); localStorage.setItem('bouquetOpened','true');
+    showPetals(); 
+    localStorage.setItem('bouquetOpened','true');
   }
 
   giftBtn.addEventListener('click', showVideo);
@@ -143,7 +145,8 @@
 
   // Video end event
   video.addEventListener('ended', ()=>{
-    endMessage.classList.remove('hidden'); requestAnimationFrame(()=> endMessage.classList.add('show'));
+    endMessage.classList.remove('hidden'); 
+    requestAnimationFrame(()=> endMessage.classList.add('show'));
   });
 
   // Share links
@@ -153,12 +156,14 @@
 
   // Close message
   closeMsg.addEventListener('click', hideEndMsg);
-  function hideEndMsg(){ endMessage.classList.remove('show'); setTimeout(()=> endMessage.classList.add('hidden'),600); }
+  function hideEndMsg(){ 
+    endMessage.classList.remove('show'); 
+    setTimeout(()=> endMessage.classList.add('hidden'),600); 
+  }
 
-  // Keyboard shortcuts
+  // Keyboard shortcuts: R to replay
   document.addEventListener('keydown', e=>{
     if(e.key==='r' || e.key==='R') replayBtn.click();
-    if(e.key==='p' || e.key==='P') togglePetalsBtn.click();
   });
 
   // Auto-show if visited
