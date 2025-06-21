@@ -3,52 +3,29 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-  <title>Bloom</title>
+  <title>Please click!!</title>
+ 
+  <link
+    href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@700&family=Lato:wght@300;400&display=swap"
+    rel="stylesheet"
+  />
   <link rel="stylesheet" href="style.css" />
 </head>
 <body>
-  <div class="container">
-    <h1>Please Click!!!</h1>
-    <button id="bloomBtn">Giving it a try!!!</button>
-    
-    <div class="bouquet-container hidden" id="bouquet">
-      <!-- SVG Bouquet -->
-      <svg width="300" height="400" viewBox="0 0 300 400">
-        <defs>
-          <radialGradient id="petalGrad" cx="50%" cy="50%" r="50%">
-            <stop offset="0%" stop-color="#ffb7c5"/>
-            <stop offset="100%" stop-color="#ff69b4"/>
-          </radialGradient>
-          <linearGradient id="leafGrad" x1="0" y1="0" x2="0" y2="1">
-            <stop offset="0%" stop-color="#7CFC00"/>
-            <stop offset="100%" stop-color="#228B22"/>
-          </linearGradient>
-        </defs>
-
-        <!-- Stems -->
-        <line x1="150" y1="300" x2="100" y2="380" stroke="#4CAF50" stroke-width="5"/>
-        <line x1="150" y1="300" x2="200" y2="380" stroke="#4CAF50" stroke-width="5"/>
-        <line x1="150" y1="300" x2="150" y2="380" stroke="#4CAF50" stroke-width="5"/>
-
-        <!-- Flowers -->
-        <circle cx="100" cy="200" r="25" fill="url(#petalGrad)" />
-        <circle cx="100" cy="200" r="10" fill="yellow" />
-
-        <circle cx="200" cy="200" r="25" fill="url(#petalGrad)" />
-        <circle cx="200" cy="200" r="10" fill="yellow" />
-
-        <circle cx="150" cy="150" r="30" fill="url(#petalGrad)" />
-        <circle cx="150" cy="150" r="10" fill="yellow" />
-
-        <!-- Animated Leaves -->
-        <ellipse class="leaf" cx="120" cy="280" rx="12" ry="24" fill="url(#leafGrad)" />
-        <ellipse class="leaf" cx="180" cy="280" rx="12" ry="24" fill="url(#leafGrad)" transform="rotate(30 180 280)" />
-        <ellipse class="leaf" cx="150" cy="300" rx="14" ry="28" fill="url(#leafGrad)" transform="rotate(-20 150 300)" />
-      </svg>
+  <div class="wrapper">
+    <!-- Cover Panel -->
+    <div class="cover" id="cover">
+      <h1>Your Virtual Bouquet Awaits</h1>
+      <button id="giftBtn">Open Bouquet</button>
     </div>
 
-    <!-- Soothing Background Music -->
-    <audio id="bgMusic" src="https://cdn.pixabay.com/download/audio/2023/03/03/audio_1cf79b9f99.mp3?filename=peaceful-melody-141212.mp3" preload="auto"></audio>
+    <!-- Video Panel -->
+    <div class="video-wrapper hidden" id="videoWrapper">
+      <video id="bouquetVideo" controls preload="auto">
+        <source src="bouquet.mp4" type="video/mp4" />
+        Your browser doesn’t support HTML5 video.
+      </video>
+    </div>
   </div>
 
   <script src="script.js"></script>
